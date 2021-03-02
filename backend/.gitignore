@@ -4,6 +4,8 @@
 # VS Code debug configuration files
 .vscode
 
+wwwroot/dist
+
 # User-specific files
 *.suo
 *.user
