@@ -1,13 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import { AppShellModule } from './app-shell/app-shell.module';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
@@ -18,15 +16,14 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule.components,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     AppRoutingModule,
     FormsModule,
     CoreModule,
-    SharedModule
+    SharedModule,
+    AppShellModule
   ],
   providers: [],
   bootstrap: [AppComponent]
