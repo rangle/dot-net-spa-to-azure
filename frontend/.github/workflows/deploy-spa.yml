@@ -1,6 +1,11 @@
-on: [push]
+name: Build and deploy the Angular SPA to the Azure Blob Storage container
+
+on:
+  push:
+    branches: [ deploy ]
+
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
     - name: 'Checkout Code'
@@ -16,4 +21,7 @@ jobs:
       with:
         enabled-static-website: 'true'
         folder: 'dist'
+        index-file: 'index.html'
+        error-file: 'index.html'
+        remove-existing-files: 'true'
         connection-string: ${{ secrets.SPA_CONNECTION_STRING }}
