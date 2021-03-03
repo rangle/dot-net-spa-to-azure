@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { AppShellModule } from './app-shell/app-shell.module';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
@@ -14,7 +13,6 @@ import { SharedModule } from './shared/shared.module';
   declarations: [
     AppComponent,
     AppRoutingModule.components,
-    NavMenuComponent,
     HomeComponent,
   ],
   imports: [
