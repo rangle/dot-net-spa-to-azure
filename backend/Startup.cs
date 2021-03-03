@@ -43,7 +43,8 @@ namespace Angular_Net_Spa
         options.UseSqlite(Configuration.GetConnectionString("CustomersSqliteConnectionString"));
       });
 
-      services.AddControllersWithViews();
+      // This method will not register services used for views or pages.
+      services.AddControllers();
 
       // Handle XSRF Name for Header
       services.AddAntiforgery(options =>
@@ -80,15 +81,10 @@ namespace Angular_Net_Spa
       {
         app.UseDeveloperExceptionPage();
       }
-      else
-      {
-        app.UseExceptionHandler("/Home/Error");
-      }
 
       // This would need to be locked down as needed (very open right now)
       app.UseCors("AllowAllPolicy");
       app.UseHttpsRedirection();
-      app.UseStaticFiles();
 
       // Manually handle setting XSRF cookie. Needed because HttpOnly 
       // has to be set to false so that Angular is able to read/access the cookie.
@@ -116,9 +112,6 @@ namespace Angular_Net_Spa
         endpoints.MapControllerRoute(
                    name: "default",
                    pattern: "{controller}/{action}/{id?}");
-
-              // Handle redirecting client-side routes to Customers/Index route
-              endpoints.MapFallbackToController("Index", "Home");
       });
 
 
