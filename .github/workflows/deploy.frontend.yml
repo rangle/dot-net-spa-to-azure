@@ -3,6 +3,7 @@ name: Build and deploy the Angular SPA to the Azure Blob Storage container
 on:
   push:
     branches: [ deploy ]
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -20,7 +21,7 @@ jobs:
       uses: tibor19/static-website-deploy@v1
       with:
         enabled-static-website: 'true'
-        folder: 'dist'
+        folder: 'frontend/dist'
         index-file: 'index.html'
         error-file: 'index.html'
         remove-existing-files: 'true'
