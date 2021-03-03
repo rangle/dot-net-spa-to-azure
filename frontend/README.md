@@ -1,4 +1,4 @@
-# Angular_Net_Spa
+# Angular SPA
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
 
@@ -6,22 +6,31 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## Deployment
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. Run the following commands in Azure CLI to create an Azure Blob Storage Account to host the Angular SPA
 
-## Running end-to-end tests
+```bash
+# Login
+az login
+az account set --subscription <YOUR_SUBSCRIPTION_ID>
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+# Create a Resource Group
+az group create --name <RESOURCE_GROUP_NAME> --l <LOCATION>
 
-## Further help
+# Create a Storage Account to store the Angular SPA
+az storage account create --name <STORAGE_ACCOUNT_NAME> -g <RESOURCE_GROUP_NAME> --sku Standard_RAGRS
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+# Enable static site hosting for this Storage Account
+# For SPA all the URLs pointing to non-existing resources should be routed to the `index.html` page
+az storage blob service-properties update --account-name <STORAGE_ACCOUNT_NAME> --static-website --index-document index.html --404-document index.html
+```
+
+If static site hosting is enabled successfully, your storage account will have a blob container named $web that you can access via this URL:
+`https://<STORAGE_ACCOUNT_NAME>.z13.web.core.windows.net/`
+
+2. Run `yarn build && yarn deploy` to deploy the Angular SPA to Azure Blob Storage
