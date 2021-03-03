@@ -4,10 +4,10 @@ This project migrates an existing ASP.NET Core API project to Azure Function.
 
 ## Technical Requirements
 
-- The .NET Core backend should be recreated using Azure functions
+- The .NET Core web API should be recreated using Azure functions
 - The Azure functions will be hosted in the Consumption plan (pay per request)
 - The sqlite database will be replaced with Azure MySQL
-- The Angular application will be deployed to Azure as a SPA
+- The Angular application will be deployed to Azure Blob Storage as a Static site
 
 ## Stretch Goals
 
@@ -17,12 +17,12 @@ This project migrates an existing ASP.NET Core API project to Azure Function.
 
 ## Get Started
 
-You can run this project in Visual Studio (which provides Intellisense). If you decide to run this project in Visual Studio Code, download the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) for Visual Studio Code and follow the instructions below:
+You can run this project in Visual Studio (which has great refactoring support). If you decide to run this project in Visual Studio Code, download the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) for Visual Studio Code and follow the instructions below:
 
 ### Start the Angular App Server
 
 ```bash
-cd ClientApp
+cd frontend
 
 # Install Angular app dependencies
 npm install
@@ -34,6 +34,7 @@ npm start
 ### Start the .Net Core Application
 
 ```bash
+cd backend
 # Use NuGet to restore dependencies and project-specific tools
 # specified in the `.csproj` file
 dotnet restore
