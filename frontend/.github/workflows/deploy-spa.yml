@@ -1,0 +1,19 @@
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 'Checkout Code'
+      uses: actions/checkout@v2
+
+    - name: 'Build Angular App'
+      run: |
+        npm install
+        npm run build --if-exists
+
+    - name: 'Deploy to Azure Blob Storage'
+      uses: tibor19/static-website-deploy@v1
+      with:
+        enabled-static-website: 'true'
+        folder: 'dist'
+        connection-string: ${{ secrets.SPA_CONNECTION_STRING }}
