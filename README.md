@@ -2,6 +2,19 @@
 
 This project migrates an existing ASP.NET Core API project to Azure Function.
 
+## Technical Requirements
+
+- The .NET Core backend should be recreated using Azure functions
+- The Azure functions will be hosted in the Consumption plan (pay per request)
+- The sqlite database will be replaced with Azure MySQL
+- The Angular application will be deployed to Azure as a SPA
+
+## Stretch Goals
+
+- Add CI/CD pipeline - build, test and deploy the application to Azure using Github Action
+- The Azure functions will be deployed from an ARM (Azure Functions resources) template
+- Secure user login using Auth0
+
 ## Get Started
 
 You can run this project in Visual Studio (which provides Intellisense). If you decide to run this project in Visual Studio Code, download the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) for Visual Studio Code and follow the instructions below:
