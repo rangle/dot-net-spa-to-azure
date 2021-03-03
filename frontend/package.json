@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:ssr": "ng run Angular_Net_Spa:server:dev",
+    "deploy": "az storage blob upload-batch --account-name dotnetspa -s ./dist -d '$web'",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
