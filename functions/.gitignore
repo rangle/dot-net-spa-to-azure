@@ -1,0 +1,6 @@
+# Build results
+bin
+obj
+
+# Azure Functions localsettings file
+local.settings.json
