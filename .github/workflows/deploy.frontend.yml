@@ -1,4 +1,4 @@
-name: Build and deploy the Angular SPA to the Azure Blob Storage container
+name: Deploy Angular SPA to Azure Blob Storage
 
 on:
   push:
