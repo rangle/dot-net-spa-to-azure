@@ -17,6 +17,9 @@ namespace DotNetSpa
       string SqlConnection = Environment.GetEnvironmentVariable("SqlConnectionString");
       builder.Services.AddDbContext<CustomersDbContext>(
           options => options.UseSqlServer(SqlConnection));
+
+      // Register CustomerRepository as a service to be used for dependency injection in the `Customer` function
+      builder.Services.AddScoped<ICustomersRepository, CustomersRepository>();
     }
   }
 }

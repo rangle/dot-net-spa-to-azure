@@ -14,31 +14,28 @@ namespace DotNetSpa.Function
 {
   public class Customers
   {
-    private readonly CustomersDbContext _context;
-    public Customers(CustomersDbContext context)
+    private readonly ICustomersRepository _CustomersRepository;
+    public Customers(CustomersDbContext context, ICustomersRepository repository)
     {
-      _context = context;
+      _CustomersRepository = repository;
     }
 
 
     [FunctionName("GetCustomers")]
-    public static async Task<IActionResult> GetCustomers(
+    public async Task<IActionResult> GetCustomers(
         [HttpTrigger(AuthorizationLevel.Function, "get", Route = "customers")] HttpRequest req,
         ILogger log)
     {
-      log.LogInformation("C# HTTP trigger function processed a request.");
-
-      string name = req.Query["name"];
-
-      string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-      dynamic data = JsonConvert.DeserializeObject(requestBody);
-      name = name ?? data?.name;
-
-      string responseMessage = string.IsNullOrEmpty(name)
-          ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-          : $"Hello, {name}. This HTTP triggered function executed successfully.";
-
-      return new OkObjectResult(responseMessage);
+      try
+      {
+        var customers = await _CustomersRepository.GetCustomersAsync();
+        return new OkObjectResult(customers);
+      }
+      catch (Exception exp)
+      {
+        log.LogError(exp.Message);
+        return new BadRequestObjectResult(exp);
+      }
     }
 
     [FunctionName("PostCustomer")]
@@ -46,18 +43,23 @@ namespace DotNetSpa.Function
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = "customers")] HttpRequest req,
             ILogger log)
     {
-      string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-      Customer data = JsonConvert.DeserializeObject<Customer>(requestBody);
-
-      var entity = await _context.AddAsync<Customer>(data);
-      await _context.SaveChangesAsync();
-
-      if (entity == null)
+      try
       {
-        return new BadRequestObjectResult("Failed to save customer.");
-      }
+        string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+        Customer customer = JsonConvert.DeserializeObject<Customer>(requestBody);
+        var newCustomer = await _CustomersRepository.InsertCustomerAsync(customer);
 
-      return new OkObjectResult(JsonConvert.SerializeObject(entity.Entity));
+        if (newCustomer == null)
+        {
+          return new BadRequestResult();
+        }
+        return new OkObjectResult(JsonConvert.SerializeObject(newCustomer));
+      }
+      catch (Exception exp)
+      {
+        log.LogError(exp.Message);
+        return new BadRequestObjectResult(exp);
+      }
     }
   }
 }
