@@ -24,7 +24,6 @@ namespace DotNetSpa.Repository
     public async Task<List<Customer>> GetCustomersAsync()
     {
       return await _Context.Customers.OrderBy(c => c.LastName)
-                           //  .Include(c => c.State)
                            .ToListAsync();
     }
 
@@ -33,7 +32,6 @@ namespace DotNetSpa.Repository
       var totalRecords = await _Context.Customers.CountAsync();
       var customers = await _Context.Customers
                            .OrderBy(c => c.LastName)
-                           //  .Include(c => c.State)
                            .Include(c => c.Orders)
                            .Skip(skip)
                            .Take(take)
@@ -44,7 +42,6 @@ namespace DotNetSpa.Repository
     public async Task<Customer> GetCustomerAsync(int id)
     {
       return await _Context.Customers
-                           //  .Include(c => c.State)
                            .SingleOrDefaultAsync(c => c.Id == id);
     }
 
